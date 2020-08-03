@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex q-pa-md">
     <q-list class="full-width" separator>
-      <q-item v-for="user in users" :key="user.id" to="/chat" clickable v-ripple>
+      <q-item v-for="(user,key) in users" :key="key" to="/chat" clickable v-ripple>
         <q-item-section avatar>
           <q-avatar color="primary" text-color="white">{{ user.name.charAt(0) }}</q-avatar>
         </q-item-section>
@@ -21,27 +21,12 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  data() {
-    return {
-      users: [
-        {
-          id: 1,
-          name: "Danny",
-          online:true
-        },
-        {
-          id: 2,
-          name: "Jim",
-          online:false
-        },
-        {
-          id: 3,
-          name: "Lucy",
-          online:true
-        },
-      ],
-    };
-  },
-};
+  computed:{
+    ...mapGetters('store',['users'])
+  }
+}
 </script>
+
+<style></style>
