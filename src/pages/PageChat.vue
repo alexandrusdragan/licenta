@@ -18,7 +18,7 @@
           :name="message.from=='me'? userDetails.name : otherUserDetails.name"
           :text="[message.text]"
           :sent="message.from=='me' ? true:false"
-          :bg-color="message.from=='me' ? 'white' : 'light-green-2'"
+          :bg-color="message.from=='me' ? 'white' : 'light-blue-4'"
         />
       </transition-group>
     </div>

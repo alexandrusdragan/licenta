@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import { LocalStorage } from 'quasar';
+import { LocalStorage, Loading } from 'quasar';
 import { firebaseAuth, firebaseDb } from 'boot/firebase';
+import { showErrorMessage } from 'src/functions/function-show-error-message';
 
 let messagesRef;
 
@@ -33,6 +34,7 @@ const mutations = {
 };
 const actions = {
 	registerUser({}, payload) {
+		Loading.show();
 		firebaseAuth
 			.createUserWithEmailAndPassword(payload.email, payload.password)
 			.then((response) => {
@@ -45,17 +47,18 @@ const actions = {
 				});
 			})
 			.catch((error) => {
-				console.log(error.message);
+				showErrorMessage(error.message);
 			});
 	},
 	loginUser({}, payload) {
+		Loading.show();
 		firebaseAuth
 			.signInWithEmailAndPassword(payload.email, payload.password)
 			.then((response) => {
 				console.log(response);
 			})
 			.catch((error) => {
-				console.log(error.message);
+				showErrorMessage(error.message);
 			});
 	},
 	logoutUser() {
@@ -63,6 +66,7 @@ const actions = {
 	},
 	handleAuthStateChanged({ commit, dispatch, state }) {
 		firebaseAuth.onAuthStateChanged((user) => {
+			Loading.hide();
 			if (user) {
 				// User is signed in.
 				LocalStorage.set('loggedIn', true);
