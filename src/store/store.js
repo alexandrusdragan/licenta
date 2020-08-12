@@ -10,7 +10,24 @@ const state = {
 	users: {},
 	messages: {},
 	dataDownloaded: false,
-	loggedIn: false
+	loggedIn: false,
+	announcements: [
+		{
+			id: 1,
+			title: 'New office',
+			text: 'New office has been built and is now operational.'
+		},
+		{
+			id: 2,
+			title: 'New office2',
+			text: 'New office has been built and is now operational.'
+		},
+		{
+			id: 3,
+			title: 'New office3',
+			text: 'New office has been built and is now operational.'
+		}
+	]
 };
 const mutations = {
 	setUserDetails(state, payload) {
@@ -163,6 +180,9 @@ const getters = {
 			}
 		});
 		return usersFiltered;
+	},
+	announcements: (state) => {
+		return state.announcements;
 	}
 };
 

@@ -12,26 +12,10 @@
 <script>
 export default {
   props: ["tab"],
-  data() {
-    return {
-      announcements: [
-        {
-          id: 1,
-          title: "New office",
-          text: "New office has been built and is now operational.",
-        },
-        {
-          id: 2,
-          title: "New office2",
-          text: "New office has been built and is now operational.",
-        },
-        {
-          id: 3,
-          title: "New office3",
-          text: "New office has been built and is now operational.",
-        },
-      ],
-    };
+  computed: {
+    announcements() {
+      return this.$store.getters["store/announcements"];
+    },
   },
 };
 </script>
