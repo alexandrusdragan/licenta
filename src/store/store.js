@@ -11,23 +11,20 @@ const state = {
 	messages: {},
 	dataDownloaded: false,
 	loggedIn: false,
-	announcements: [
-		{
-			id: 1,
+	announcements: {
+		ID1: {
 			title: 'New office',
 			text: 'New office has been built and is now operational.'
 		},
-		{
-			id: 2,
+		ID2: {
 			title: 'New office2',
 			text: 'New office has been built and is now operational.'
 		},
-		{
-			id: 3,
+		ID3: {
 			title: 'New office3',
 			text: 'New office has been built and is now operational.'
 		}
-	]
+	}
 };
 const mutations = {
 	setUserDetails(state, payload) {
@@ -47,6 +44,11 @@ const mutations = {
 	},
 	setDataDownloaded(state, value) {
 		state.dataDownloaded = value;
+	},
+	deleteAnnouncement(state, id) {
+		console.log('delete id: ', id);
+
+		Vue.delete(state.announcements, id);
 	}
 };
 const actions = {
@@ -169,6 +171,9 @@ const actions = {
 
 		payload.message.from = 'them';
 		firebaseDb.ref('chats/' + payload.otherUserId + '/' + state.userDetails.userId).push(payload.message);
+	},
+	deleteAnnouncement({ commit }, id) {
+		commit('deleteAnnouncement', id);
 	}
 };
 const getters = {

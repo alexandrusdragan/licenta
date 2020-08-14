@@ -1,21 +1,25 @@
 <template>
   <q-list bordered separator>
-    <q-item v-for="announcement in announcements" :key="announcement.id" clickable v-ripple>
-      <q-item-section>
-        <q-item-label>{{announcement.title}}</q-item-label>
-        <q-item-label caption>{{announcement.text}}</q-item-label>
-      </q-item-section>
-    </q-item>
+    <announcement
+      v-for="(announcement,key) in announcements"
+      :key="key"
+      :announcement="announcement"
+      :id="key"
+    ></announcement>
   </q-list>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+
 export default {
   props: ["tab"],
   computed: {
-    announcements() {
-      return this.$store.getters["store/announcements"];
-    },
+    ...mapGetters("store", ["announcements"]),
+  },
+  components: {
+    announcement: require("components/Announcements.vue").default,
   },
 };
 </script>
