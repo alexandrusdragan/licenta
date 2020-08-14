@@ -26,6 +26,13 @@
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
+    <div v-if="tab=='blog'" class="absolute-bottom text-center q-mb-lg">
+      <q-btn @click="showAddAnnouncement=true" round color="primary" size="20px" icon="add" />
+    </div>
+
+    <q-dialog v-model="showAddAnnouncement">
+      <add-ann></add-ann>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -34,11 +41,13 @@ export default {
   data() {
     return {
       tab: "chat",
+      showAddAnnouncement: false,
     };
   },
   components: {
     "users-chat": require("components/Users.vue").default,
     "users-blog": require("components/Blog.vue").default,
+    "add-ann": require("components/AddAnnouncement.vue").default,
   },
 };
 </script>
