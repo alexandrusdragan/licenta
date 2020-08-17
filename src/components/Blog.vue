@@ -29,4 +29,8 @@ export default {
 </script>
 
 <style>
+.q-scroll-area-tasks {
+  display: flex;
+  flex-grow: 1;
+}
 </style>
