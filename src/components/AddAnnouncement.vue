@@ -6,18 +6,57 @@
       <q-btn v-close-popup flat dense round icon="close" />
     </q-card-section>
 
-    <q-card-section
-      class="q-pt-none"
-    >Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.</q-card-section>
+    <q-form @submit.prevent="submitForm">
+      <q-card-section class="q-pt-none">
+        <div class="row q-mb-sm">
+          <q-input
+            outlined
+            :rules="[val => !!val || 'Field is required']"
+            v-model="taskToSubmit.title"
+            label="Title"
+            ref="name"
+            autofocus
+            clearable
+          />
+        </div>
+        <div class="row q-mb-sm">
+          <q-input outlined v-model="taskToSubmit.text" label="Content" class="col" clearable />
+        </div>
+      </q-card-section>
 
-    <q-card-actions align="right">
-      <q-btn flat label="Publish" color="primary" v-close-popup />
-    </q-card-actions>
+      <q-card-actions align="right">
+        <q-btn type="submit" flat label="Publish" color="primary" />
+      </q-card-actions>
+    </q-form>
   </q-card>
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      taskToSubmit: {
+        title: "",
+        text: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions("store", ["addAnnouncement"]),
+    submitForm() {
+      this.$refs.name.validate();
+      if (!this.$refs.name.hasError) {
+        this.submitTask();
+      }
+    },
+    submitTask() {
+      this.addAnnouncement(this.taskToSubmit);
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style>

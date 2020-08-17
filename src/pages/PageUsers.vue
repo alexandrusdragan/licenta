@@ -26,12 +26,19 @@
         </q-tab-panel>
       </q-tab-panels>
     </q-card>
-    <div v-if="tab=='blog'" class="absolute-bottom text-center q-mb-lg">
-      <q-btn @click="showAddAnnouncement=true" round color="primary" size="20px" icon="add" />
+    <div v-if="tab=='blog'" class="absolute-bottom text-center q-mb-lg no-pointer-events">
+      <q-btn
+        @click="showAddAnnouncement=true"
+        class="all-pointer-events"
+        round
+        color="primary"
+        size="20px"
+        icon="add"
+      />
     </div>
 
     <q-dialog v-model="showAddAnnouncement">
-      <add-ann></add-ann>
+      <add-ann @close="showAddAnnouncement=false"></add-ann>
     </q-dialog>
   </q-page>
 </template>

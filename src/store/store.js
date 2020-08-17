@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { LocalStorage, Loading } from 'quasar';
 import { firebaseAuth, firebaseDb } from 'boot/firebase';
 import { showErrorMessage } from 'src/functions/function-show-error-message';
+import { uid } from 'quasar';
 
 let messagesRef;
 
@@ -12,18 +13,18 @@ const state = {
 	dataDownloaded: false,
 	loggedIn: false,
 	announcements: {
-		ID1: {
-			title: 'New office',
-			text: 'New office has been built and is now operational.'
-		},
-		ID2: {
-			title: 'New office2',
-			text: 'New office has been built and is now operational.'
-		},
-		ID3: {
-			title: 'New office3',
-			text: 'New office has been built and is now operational.'
-		}
+		// ID1: {
+		// 	title: 'New office',
+		// 	text: 'New office has been built and is now operational.'
+		// },
+		// ID2: {
+		// 	title: 'New office2',
+		// 	text: 'New office has been built and is now operational.'
+		// },
+		// ID3: {
+		// 	title: 'New office3',
+		// 	text: 'New office has been built and is now operational.'
+		// }
 	}
 };
 const mutations = {
@@ -49,6 +50,9 @@ const mutations = {
 		console.log('delete id: ', id);
 
 		Vue.delete(state.announcements, id);
+	},
+	addAnnouncement(state, payload) {
+		Vue.set(state.announcements, payload.id, payload.announcement);
 	}
 };
 const actions = {
@@ -174,6 +178,14 @@ const actions = {
 	},
 	deleteAnnouncement({ commit }, id) {
 		commit('deleteAnnouncement', id);
+	},
+	addAnnouncement({ commit }, announcement) {
+		let announcementId = uid();
+		let payload = {
+			id: announcementId,
+			announcement: announcement
+		};
+		commit('addAnnouncement', payload);
 	}
 };
 const getters = {
