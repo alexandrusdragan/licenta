@@ -109,6 +109,7 @@ const actions = {
 					}
 				});
 				dispatch('firebaseGetUsers');
+				dispatch('firebaseReadTasks');
 				this.$router.push('/').catch((err) => {});
 			} else {
 				// User is logged out
@@ -176,16 +177,40 @@ const actions = {
 		payload.message.from = 'them';
 		firebaseDb.ref('chats/' + payload.otherUserId + '/' + state.userDetails.userId).push(payload.message);
 	},
-	deleteAnnouncement({ commit }, id) {
-		commit('deleteAnnouncement', id);
+	deleteAnnouncement({ dispatch }, id) {
+		dispatch('firebaseDeleteAnnouncement', id);
 	},
-	addAnnouncement({ commit }, announcement) {
+	addAnnouncement({ dispatch }, announcement) {
 		let announcementId = uid();
 		let payload = {
 			id: announcementId,
 			announcement: announcement
 		};
-		commit('addAnnouncement', payload);
+		dispatch('firebaseAddAnnouncement', payload);
+	},
+	firebaseReadTasks({ commit }) {
+		let userAnnouncements = firebaseDb.ref('announcements');
+		userAnnouncements.on('child_added', (snapshot) => {
+			let announcement = snapshot.val();
+			let payload = {
+				id: snapshot.key,
+				announcement: announcement
+			};
+			commit('addAnnouncement', payload);
+		});
+
+		userAnnouncements.on('child_removed', (snapshot) => {
+			let announcementId = snapshot.key;
+			commit('deleteAnnouncement', announcementId);
+		});
+	},
+	firebaseAddAnnouncement({}, payload) {
+		let announcementRef = firebaseDb.ref('announcements/' + payload.id);
+		announcementRef.set(payload.announcement);
+	},
+	firebaseDeleteAnnouncement({}, announcementId) {
+		let announcementRef = firebaseDb.ref('announcements/' + announcementId);
+		announcementRef.remove();
 	}
 };
 const getters = {
