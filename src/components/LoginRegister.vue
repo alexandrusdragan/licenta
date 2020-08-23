@@ -8,13 +8,30 @@
       <q-input
         v-if="tab=='register'"
         outlined
-        v-model="formData.name"
+        v-model="formData.firstName"
         :rules="[
           val => !!val || '* Please enter your name.',
         ]"
         lazy-rules
         class="q-mb-md"
-        label="Name"
+        label="First name"
+      />
+    </transition>
+    <transition
+      appear
+      enter-active-class="animated backInUp"
+      leave-active-class="animated backOutDown"
+    >
+      <q-input
+        v-if="tab=='register'"
+        outlined
+        v-model="formData.lastName"
+        :rules="[
+          val => !!val || '* Please enter your name.',
+        ]"
+        lazy-rules
+        class="q-mb-md"
+        label="Last name"
       />
     </transition>
     <transition
@@ -57,6 +74,59 @@
       enter-active-class="animated backInUp"
       leave-active-class="animated backOutDown"
     >
+      <q-btn-dropdown label="Department" v-if="tab=='register'" class="q-mb-xl">
+        <q-list>
+          <q-item
+            clickable
+            v-model="formData.department"
+            v-close-popup
+            @click="onItemClick('Production')"
+          >
+            <q-item-section>
+              <q-item-label>Production</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            v-model="formData.department"
+            v-close-popup
+            @click="onItemClick('Human Resources')"
+          >
+            <q-item-section>
+              <q-item-label>Human Resources</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            v-model="formData.department"
+            v-close-popup
+            @click="onItemClick('Marketing')"
+          >
+            <q-item-section>
+              <q-item-label>Marketing</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item
+            clickable
+            v-model="formData.department"
+            v-close-popup
+            @click="onItemClick('Research&Development')"
+          >
+            <q-item-section>
+              <q-item-label>Research&Development</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
+    </transition>
+    <transition
+      appear
+      enter-active-class="animated backInUp"
+      leave-active-class="animated backOutDown"
+    >
       <div class="row">
         <q-space />
         <q-btn color="primary" type="submit" :label="tab" />
@@ -73,9 +143,11 @@ export default {
   data() {
     return {
       formData: {
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
+        department: "",
       },
     };
   },
@@ -92,9 +164,16 @@ export default {
         this.registerUser(this.formData);
       }
     },
+    onItemClick(item) {
+      this.formData.department = item;
+      console.log("department: ", this.formData.department);
+    },
   },
 };
 </script>
 
 <style>
+.q-btn-dropdown {
+  background-color: #ef9a0d;
+}
 </style>

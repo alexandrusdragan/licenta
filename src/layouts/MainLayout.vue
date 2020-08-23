@@ -32,7 +32,7 @@
         >
           Logout
           <br />
-          {{userDetails.name}}
+          {{userDetails.firstName}}
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -101,7 +101,10 @@ export default {
       console.log(this.$route);
       let currentPath = this.$route.fullPath;
       if (currentPath == "/") return "TeamChat";
-      else if (currentPath.includes("/chat")) return this.otherUserDetails.name;
+      else if (currentPath.includes("/chat"))
+        return (
+          this.otherUserDetails.firstName + " " + this.otherUserDetails.lastName
+        );
       else if (currentPath == "/auth") return "Login";
     },
   },

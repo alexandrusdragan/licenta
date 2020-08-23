@@ -4,7 +4,7 @@
       <q-banner
         v-if="!otherUserDetails.online"
         class="bg-grey-4 text-center fixed-top"
-      >{{otherUserDetails.name}} is offline.</q-banner>
+      >{{otherUserDetails.firstName}} is offline.</q-banner>
     </transition>
     <div :class="{'invisible' : !showMessages}" class="q-pa-md column col justify-end">
       <transition-group
@@ -15,10 +15,10 @@
         <q-chat-message
           v-for="(message,key) in messages"
           :key="key"
-          :name="message.from=='me'? userDetails.name : otherUserDetails.name"
+          :name="message.from=='me'? userDetails.firstName : otherUserDetails.firstName"
           :text="[message.text]"
           :sent="message.from=='me' ? true:false"
-          :bg-color="message.from=='me' ? 'white' : 'light-blue-4'"
+          :bg-color="message.from=='me' ? 'amber-7' : 'light-blue-4'"
         />
       </transition-group>
     </div>

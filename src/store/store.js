@@ -64,8 +64,10 @@ const actions = {
 				console.log(response);
 				let userId = firebaseAuth.currentUser.uid;
 				firebaseDb.ref('users/' + userId).set({
-					name: payload.name,
+					firstName: payload.firstName,
+					lastName: payload.lastName,
 					email: payload.email,
+					department: payload.department,
 					online: true
 				});
 			})
@@ -97,8 +99,10 @@ const actions = {
 				firebaseDb.ref('users/' + userId).once('value', (snapshot) => {
 					let userDetails = snapshot.val();
 					commit('setUserDetails', {
-						name: userDetails.name,
+						firstName: userDetails.firstName,
+						lastName: userDetails.lastName,
 						email: userDetails.email,
+						department: userDetails.department,
 						userId: userId
 					});
 				});
