@@ -96,8 +96,8 @@ module.exports = function(/* ctx */) {
 			workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
 			workboxOptions: {}, // only for GenerateSW
 			manifest: {
-				name: `licenta`,
-				short_name: `licenta`,
+				name: `TeamChat`,
+				short_name: `TeamChat`,
 				description: `A Quasar Framework app`,
 				display: 'standalone',
 				orientation: 'portrait',
@@ -161,7 +161,7 @@ module.exports = function(/* ctx */) {
 			builder: {
 				// https://www.electron.build/configuration/configuration
 
-				appId: 'licenta'
+				appId: 'TeamChat'
 			},
 
 			// More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
